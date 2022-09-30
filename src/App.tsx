@@ -7,7 +7,7 @@ import {
 import {Book} from './page/book/Detail'
 import {Home} from './page/home'
 import {CreateBook} from './page/book/Create'
-import {StateMachine} from './page/stateMachine'
+import {StateMachine} from './page/stateMachine/light'
 
 
 const router = createBrowserRouter([
