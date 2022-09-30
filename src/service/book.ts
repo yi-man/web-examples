@@ -56,32 +56,32 @@ export class Book {
   batchNo: string;
   leCode: string;
 
-  constructor(book: IBook) {
-    this.id = book.id
-    this.action= book.action
-    this.billNo= book.billNo
-    this.bookType= book.bookType
-    this.bu= book.bu
-    this.buCode= book.buCode
-    this.le= book.le
-    this.leCode = book.leCode
-    this.department= book.department
-    this.departmentStr= book.departmentStr
-    this.paymentSerialNo= book.paymentSerialNo
-    this.city= book.city
-    this.cityStr= book.cityStr
-    this.type= book.type
-    this.typeStr= book.typeStr
-    this.fundAttr = book.fundAttr
-    this.sum= book.sum
-    this.realSum= book.realSum
-    this.status= book.status
-    this.statusStr= book.statusStr
-    this.validateTime= book.validateTime
-    this.fundNo= book.fundNo
-    this.updater= book.updater
-    this.updateTime= book.updateTime
-    this.batchNo= book.batchNo
+  constructor(book?: IBook) {
+    this.id = book?.id || -1
+    this.action= book?.action || ''
+    this.billNo= book?.billNo || ''
+    this.bookType= book?.bookType || ''
+    this.bu= book?.bu || ''
+    this.buCode= book?.buCode || ''
+    this.le= book?.le || ''
+    this.leCode = book?.leCode || ''
+    this.department= book?.department || -1
+    this.departmentStr= book?.departmentStr || ''
+    this.paymentSerialNo= book?.paymentSerialNo || ''
+    this.city= book?.city || -1
+    this.cityStr= book?.cityStr || ''
+    this.type= book?.type || -1
+    this.typeStr= book?.typeStr || ''
+    this.fundAttr = book?.fundAttr || ''
+    this.sum= book?.sum || -1
+    this.realSum= book?.realSum || -1
+    this.status= book?.status || ''
+    this.statusStr= book?.statusStr || ''
+    this.validateTime= book?.validateTime || new Date().getTime()
+    this.fundNo= book?.fundNo || ''
+    this.updater= book?.updater || ''
+    this.updateTime= book?.updateTime || new Date().getTime()
+    this.batchNo= book?.batchNo || ''
   }
 
   editable(key: keyof IBook) {

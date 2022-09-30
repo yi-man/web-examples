@@ -4,9 +4,9 @@ import {
   RouterProvider,
   Route,
 } from "react-router-dom";
-import {Book} from './page/books/Detail'
+import {Book} from './page/book/Detail'
 import {Home} from './page/home'
-import {CreateBook} from './page/books/Create'
+import {CreateBook} from './page/book/Create'
 
 
 const router = createBrowserRouter([
