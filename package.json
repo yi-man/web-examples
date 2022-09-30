@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@xstate/react": "^3.0.1",
     "ahooks": "^3.7.1",
     "antd": "^4.23.3",
     "axios": "^0.27.2",
@@ -16,7 +17,8 @@
     "mobx-react": "^7.5.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.4.1"
+    "react-router-dom": "^6.4.1",
+    "xstate": "^4.33.6"
   },
   "devDependencies": {
     "@testing-library/dom": "^8.18.1",
