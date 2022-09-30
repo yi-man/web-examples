@@ -9,6 +9,7 @@ specifiers:
   antd: ^4.23.3
   axios: ^0.27.2
   mobx: ^6.6.2
+  mobx-react: ^7.5.3
   react: ^18.2.0
   react-dom: ^18.2.0
   react-router-dom: ^6.4.1
@@ -20,6 +21,7 @@ dependencies:
   antd: 4.23.3_vasrhy3y4l34dp22m4ani4syq4
   axios: 0.27.2
   mobx: 6.6.2
+  mobx-react: 7.5.3_qrr2ojv4n7h7ey2xj7njerqqr4
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-router-dom: 6.4.1_biqbaboplfbrettd7655fr4n2y
@@ -1062,6 +1064,43 @@ packages:
     engines: {node: '>= 0.6'}
     dependencies:
       mime-db: 1.52.0
+    dev: false
+
+  /mobx-react-lite/3.4.0_qrr2ojv4n7h7ey2xj7njerqqr4:
+    resolution: {integrity: sha512-bRuZp3C0itgLKHu/VNxi66DN/XVkQG7xtoBVWxpvC5FhAqbOCP21+nPhULjnzEqd7xBMybp6KwytdUpZKEgpIQ==}
+    peerDependencies:
+      mobx: ^6.1.0
+      react: ^16.8.0 || ^17 || ^18
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      mobx: 6.6.2
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /mobx-react/7.5.3_qrr2ojv4n7h7ey2xj7njerqqr4:
+    resolution: {integrity: sha512-+ltotliKt4Bjn3d8taZH/VFAcRUbaASvsM8/QSvmHXcZ++RZwaFtjl9JkIosy1byaJGEDS3EFFx2InRm2VaSUw==}
+    peerDependencies:
+      mobx: ^6.1.0
+      react: ^16.8.0 || ^17 || ^18
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      mobx: 6.6.2
+      mobx-react-lite: 3.4.0_qrr2ojv4n7h7ey2xj7njerqqr4
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /mobx/6.6.2:

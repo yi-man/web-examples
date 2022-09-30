@@ -7,7 +7,10 @@ interface BookProps {
 }
 export const Book: FC<BookProps> = memo(() => {
   const {data} = useRequest(getBook)
-  return <div>{data?.bu}{data?.isDeyou() ? 'deyou' : 'no deyou'}</div>;
+  if(!data) {
+    return <div>empty</div>
+  }
+  return <div>{data.bu}{data.getBuType().isDeyou ? 'deyou' : 'no deyou'}</div>;
 });
 
 Book.displayName = 'Book';

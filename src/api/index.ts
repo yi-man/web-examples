@@ -1,5 +1,33 @@
+export type IBook = {
+  id: number;
+  action: string;
+  billNo: string;
+  bookType: string;
+  bu: string;
+  buCode: string;
+  le: string;
+  leCode: string;
+  fundAttr: string;
+  department: number;
+  departmentStr: string;
+  paymentSerialNo: string;
+  city: number;
+  cityStr: string;
+  type: number;
+  typeStr: string;
+  sum: number;
+  realSum: number;
+  status: string;
+  statusStr: string;
+  validateTime: number;
+  fundNo: string;
+  updater: string;
+  updateTime: number;
+  batchNo: string;
+}
+
 export const getBookApi = async () => {
-  const data = {
+  const data: IBook = {
     // 主键
     id: 1,
     // 台账的执行动作
@@ -10,8 +38,10 @@ export const getBookApi = async () => {
     bookType: 'BUSINESS',
     // BU
     bu: 'lianjia',
+    buCode: '2700',
     // LE
     le: '上海链家',
+    leCode: '上海链家',
     // 事业部
     department: 2,
     // 事业部
@@ -44,6 +74,7 @@ export const getBookApi = async () => {
     updateTime: 1664431141,
     // 导入批次号
     batchNo: 'batchNo-111',
+    fundAttr: '1',
   };
 
   return data
