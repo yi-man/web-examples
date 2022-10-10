@@ -24,35 +24,35 @@ const getPayoutForm = (stepType: PaymentType) => {
 
 interface SetStepOnRecipientChange {
   step: Step;
-  setStep: SetStep;
   recipientSelection?: RecipientSelection;
   hasDomesticPermission?: boolean;
   stepType: PaymentType;
 }
 export const setStepOnRecipientChange = ({
   step,
-  setStep,
   stepType,
   recipientSelection,
   hasDomesticPermission,
 }: SetStepOnRecipientChange) => {
   if (!recipientSelection) {
-    return;
+    return step;
   }
 
   if (step === Step.RecipientSelection) {
     if (recipientSelection === RecipientSelection.New) {
-      setStep(hasDomesticPermission ? Step.NewRecipientSelection : Step.PayoutForm);
+      return (hasDomesticPermission ? Step.NewRecipientSelection : Step.PayoutForm);
       // logEvent(drop2Events.transferFlowNewRecipient);
     } else {
-      setStep(getPayoutForm(stepType));
+      return (getPayoutForm(stepType));
       // logEvent(drop2Events.transferFlowNewRecipient);
     }
   } else if (hasDomesticPermission) {
     if (step.includes('PayoutForm')) {
-      setStep(getPayoutForm(stepType));
+      return (getPayoutForm(stepType));
     }
   }
+
+  return step
 };
 
 export const getFirstStep = (initialData?: InitialData) => {

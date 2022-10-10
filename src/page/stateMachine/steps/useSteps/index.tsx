@@ -38,9 +38,49 @@ export const StepsContext = createContext<StepsContextProps>(stepContextInitialD
 
 const DEFAULT_FIRST_STEP = Step.INITIAL;
 
+const getHasDomesticPermission = (
+  domesticPayoutPreferences: InitialData['domesticPayoutPreferences']
+) => domesticPayoutPreferences.length > 0;
+
+const getStepType = ({
+  recipientDetails,
+  domesticPayoutPreferences,
+}: {
+  recipientDetails: any;
+  domesticPayoutPreferences: InitialData['domesticPayoutPreferences'];
+}) => {
+  const hasDomesticPermission = getHasDomesticPermission(domesticPayoutPreferences);
+  const { recipientSelection, recipient } = recipientDetails;
+
+  if (recipientSelection === RecipientSelection.Existing) {
+    if (recipient && hasDomesticPermission) {
+      const isDomestic =
+        recipient.bankDetails.accountCurrency === 'AUD' && recipient.bankDetails.bankCountryCode === 'AU';
+
+      const found = domesticPayoutPreferences.find(
+        (preference: any) => preference.transferMethod === recipient.bankDetails.localClearingSystem
+      );
+
+      if (isDomestic && found) {
+        return found.transferMethod;
+      } else {
+        return 'INTERNATIONAL';
+      }
+    }
+  }
+
+  return undefined;
+};
+
 export const StepsProvider: FC = ({ children }) => {
   const [step, setStep] = useState<Step>(DEFAULT_FIRST_STEP);
+  // const [initialData, setInitialData] = useState<InitialData | undefined>(undefined);
   const [stepType, setStepType] = useState<StepType>('INTERNATIONAL');
+  const [context, setContext] = useState<{
+    initialData?:InitialData,
+    recipient?: any,
+    recipientSelection?: RecipientSelection 
+  }>({})
 
   const percent = useMemo(() => {
     const steps = getSteps(stepType);
@@ -58,27 +98,56 @@ export const StepsProvider: FC = ({ children }) => {
     return ((index + 1) / steps.length) * 100;
   }, [step, stepType]);
 
-  const setStepOnRecipientChange = useCallback(
-    ({ recipientSelection, hasDomesticPermission, stepType: latestStepType }: Condition) => {
-      setStepOnRecipientChangeUtils({
-        step,
-        stepType: latestStepType || stepType,
-        setStep,
-        recipientSelection,
-        hasDomesticPermission,
-      });
-    },
-    [step, stepType]
-  );
+  useEffect(() => {
+    const newStepType = getStepType({
+      recipientDetails: context.recipient,
+      domesticPayoutPreferences: context.initialData.domesticPayoutPreferences
+    })
+
+    setStepType(newStepType)
+
+    const newStep = setStepOnRecipientChangeUtils({
+      step,
+      stepType: newStepType,
+      recipientSelection: context.recipientSelection,
+      hasDomesticPermission: getHasDomesticPermission(context.initialData.domesticPayoutPreferences),
+    })
+
+    setStep(newStep)
+  }, [context.recipient, context.recipientSelection])
+
+  useEffect(() => {
+    
+  }, [step, context])
+
+  const firsStep = useMemo(()=>{
+    return getFirstStep(context.initialData)
+  }, [context.initialData]) ;
+
+  setStep(firsStep);
 
   const value = {
+    firsStep,
     step,
-    setStep,
+    stepWidth: getStepWidth(step),
     percent,
     stepType,
+
+    setStep,
+    // setStepType,
+    setContext
+  };
+
+  const value2 = {
+    step: {
+      first: firsStep,
+      current: step,
+      type: stepType,
+      percent: percent,
+      width: getStepWidth(step)
+    },
+    setStep,
     setStepType,
-    setStepOnRecipientChange,
-    stepWidth: getStepWidth(step),
   };
 
   return <StepsContext.Provider value={value}>{children}</StepsContext.Provider>;
@@ -86,16 +155,16 @@ export const StepsProvider: FC = ({ children }) => {
 
 export const useSteps = () => useContext(StepsContext) as Required<StepsContextProps>;
 
-export const useFirstStep = (initialData?: InitialData) => {
-  const { step, setStep } = useContext(StepsContext);
+// export const useFirstStep = (initialData?: InitialData) => {
+//   const { step, setStep } = useContext(StepsContext);
 
-  useEffect(() => {
-    if (initialData) {
-      const firsStep = getFirstStep(initialData);
+//   useEffect(() => {
+//     if (initialData) {
+//       const firsStep = getFirstStep(initialData);
 
-      setStep(firsStep);
-    }
-  }, [initialData]);
+//       setStep(firsStep);
+//     }
+//   }, [initialData]);
 
-  return step;
-};
+//   return step;
+// };
