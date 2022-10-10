@@ -9,6 +9,7 @@ interface StateMachineProps {
 export const StateMachine: FC<StateMachineProps> = memo(() => {
   const [state, send] = useMachine(lightMachine);
 
+  console.log(111111111111, state, state.value)
   const onClick = () => {
     send('TRANS');
   };

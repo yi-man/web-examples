@@ -23,7 +23,6 @@ export const CreateBook: FC<CreateBookProps> = observer(() => {
       <div>buCode: {book.buCode}</div>
       <div>isDeyou: {book.getBuType().isDeyou ? 'yes' : 'no'}</div>
       <Form form={form} onValuesChange={onValuesChange}>
-        
         <Item name="buCode">
           <Input />
         </Item>  

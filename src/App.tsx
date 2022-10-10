@@ -8,13 +8,17 @@ import {Book} from './page/book/Detail'
 import {Home} from './page/home'
 import {CreateBook} from './page/book/Create'
 import {StateMachine as LightStateMachine} from './page/stateMachine/light'
+import {StateMachine as StepsStateMachine} from './page/stateMachine/steps'
 
 
 const router = createBrowserRouter([
   {
+    path: "/state-machine/steps",
+    element: <StepsStateMachine />,
+  },
+  {
     path: "/state-machine",
     element: <LightStateMachine />,
-
   },
   {
     path: "/book/create",

@@ -106,6 +106,8 @@ const multiStepFormMachine = createMachine<
       }),
       assignBeneficiaryInfoToContext: assign((context, event) => {
         if (event.type !== 'CONFIRM_BENEFICIARY') return {};
+
+        console.log(22222222222222, context, event, event.info)
         return {
           beneficiaryInfo: event.info,
         };
