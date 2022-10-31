@@ -9,9 +9,14 @@ import {Home} from './page/home'
 import {CreateBook} from './page/book/Create'
 import {StateMachine as LightStateMachine} from './page/stateMachine/light'
 import {StateMachine as StepsStateMachine} from './page/stateMachine/steps'
+import {RxDemo} from './page/rx'
 
 
 const router = createBrowserRouter([
+  {
+    path: "/rx",
+    element: <RxDemo />,
+  },
   {
     path: "/state-machine/steps",
     element: <StepsStateMachine />,
