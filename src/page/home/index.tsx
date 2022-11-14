@@ -2,6 +2,7 @@ import { FC, memo, useEffect, useState } from 'react';
 import { observer } from "mobx-react";
 import reactLogo from './react.svg'
 import './App.css'
+import {Button} from 'antd'
 
 interface HomeProps {
   placeholder?:string
@@ -21,9 +22,9 @@ export const Home: FC<HomeProps> = observer(() => {
         </div>
         <h1>Vite + React</h1>
         <div className="card">
-          <button onClick={() => setCount((count) => count + 1)}>
+          <Button onClick={() => setCount((count) => count + 1)} type='primary'>
             count is {count}
-          </button>
+          </Button>
           <p>
             Edit <code>src/App.tsx</code> and save to test HMR
           </p>
