@@ -10,7 +10,7 @@ interface BookProps {
 export const Book: FC<BookProps> = observer(() => {
   const [localStore] = useState(() => new BookStore());
 
-  console.log(localStore.book?.buCode)
+  // console.log(localStore.book?.buCode)
   useEffect(()=> {
     localStore.fetchBook()
   }, [])
