@@ -1,7 +1,9 @@
 import { RJSFSchema, UiSchema } from "@rjsf/utils";
 
 
-export const schema: RJSFSchema = {
+
+
+ const schema: RJSFSchema = {
   "title": "A registration form",
   "description": "A simple form example. Demonstrating ui options",
   "type": "object",
@@ -13,11 +15,13 @@ export const schema: RJSFSchema = {
     "firstName": {
       "type": "string",
       "title": "First name",
-      "default": "Chuck"
+      // "default": "Chuck"
     },
     "lastName": {
       "type": "string",
-      "title": "Last name"
+      "title": "Last name",
+      // minLength: 1
+      minLength: 3,
     },
     "telephone": {
       "type": "string",
@@ -27,7 +31,9 @@ export const schema: RJSFSchema = {
   }
 }
 
-export const uiSchema: UiSchema = {
+
+
+ const uiSchema: UiSchema = {
   "ui:submitButtonOptions": {
     "submitText": "Confirm Details",
     // "norender": false,
@@ -66,6 +72,21 @@ export const uiSchema: UiSchema = {
     "ui:options": {
       "inputType": "tel"
     }
+  }
+}
+
+export default  {
+  schema,
+  uiSchema,
+  customValidate: function validate({ firstName, lastName }, errors) {
+    // console.log(222222222222222, errors)
+    // if (!firstName) {
+    //   errors.firstName.addError("should not empty");
+    // }
+    // if (!lastName) {
+    //   errors.lastName.addError("should not empty");
+    // }
+    return errors;
   }
 }
 

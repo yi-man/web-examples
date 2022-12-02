@@ -19,6 +19,7 @@ specifiers:
   '@vitejs/plugin-react': ^2.1.0
   '@xstate/react': ^3.0.1
   ahooks: ^3.7.1
+  ajv: ^8.11.2
   antd: 4.22.8
   axios: ^0.27.2
   dayjs: ^1.11.6
@@ -54,6 +55,7 @@ dependencies:
   '@rjsf/validator-ajv8': 5.0.0-beta.13_@rjsf+utils@5.0.0-beta.13
   '@xstate/react': 3.0.1_ptifxsuzjlvytalhuenru25rrq
   ahooks: 3.7.1_react@18.2.0
+  ajv: 8.11.2
   antd: 4.22.8_biqbaboplfbrettd7655fr4n2y
   axios: 0.27.2
   dayjs: 1.11.6
