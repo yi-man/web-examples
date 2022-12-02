@@ -11,6 +11,7 @@ import {StateMachine as LightStateMachine} from './page/stateMachine/light'
 import {StateMachine as StepsStateMachine} from './page/stateMachine/steps'
 import {RxDemo} from './page/rx'
 import Formily from './page/formily'
+import {JsonSchemaForm} from './page/jsonSchemaForm'
 
 
 
@@ -49,6 +50,10 @@ window.addEventListener('pushState', function(e) {
 });
 
 const router = createBrowserRouter([
+  {
+    path: "/jsf",
+    element: <JsonSchemaForm />,
+  },
   {
     path: "/formily",
     element: <Formily />,
