@@ -10,6 +10,8 @@ import {CreateBook} from './page/book/Create'
 import {StateMachine as LightStateMachine} from './page/stateMachine/light'
 import {StateMachine as StepsStateMachine} from './page/stateMachine/steps'
 import {RxDemo} from './page/rx'
+import Formily from './page/formily'
+
 
 
 var postMessage = function(type: string, data: any) {
@@ -47,6 +49,10 @@ window.addEventListener('pushState', function(e) {
 });
 
 const router = createBrowserRouter([
+  {
+    path: "/formily",
+    element: <Formily />,
+  },
   {
     path: "/rx",
     element: <RxDemo />,

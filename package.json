@@ -9,9 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.8.0",
+    "@formily/antd": "^2.2.13",
+    "@formily/core": "^2.2.13",
+    "@formily/react": "^2.2.13",
+    "@formily/reactive": "^2.2.13",
     "@xstate/react": "^3.0.1",
     "ahooks": "^3.7.1",
-    "antd": "^4.23.3",
+    "antd": "4.22.8",
     "axios": "^0.27.2",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
@@ -19,14 +24,17 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "mobx": "^6.6.2",
     "mobx-react": "^7.5.3",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-is": "^18.2.0",
     "react-router-dom": "^6.4.1",
     "rxjs": "^7.5.7",
     "xstate": "^4.33.6"
   },
   "devDependencies": {
     "@testing-library/dom": "^8.18.1",
+    "@types/node": "^18.11.10",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
