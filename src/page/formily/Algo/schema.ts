@@ -15,7 +15,6 @@ export const schema: ISchema = {
           minimum: -1,
           'x-decorator': 'FormItem',
           'x-component': 'NumberPicker',
-
         }
       }
     },

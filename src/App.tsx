@@ -14,6 +14,8 @@ import Formily from './page/formily'
 import FormilyAlgo from './page/formily/Algo'
 
 import {JsonSchemaForm} from './page/jsonSchemaForm'
+import {JsonSchemaForm as Algo} from './page/jsonSchemaForm/Algo'
+
 
 
 
@@ -52,6 +54,10 @@ window.addEventListener('pushState', function(e) {
 });
 
 const router = createBrowserRouter([
+  {
+    path: "/jsf/algo",
+    element: <Algo />,
+  },
   {
     path: "/jsf",
     element: <JsonSchemaForm />,
