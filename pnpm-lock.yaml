@@ -6,6 +6,7 @@ specifiers:
   '@formily/core': ^2.2.13
   '@formily/react': ^2.2.13
   '@formily/reactive': ^2.2.13
+  '@formily/shared': ^2.2.13
   '@rjsf/antd': 5.0.0-beta.13
   '@rjsf/core': 5.0.0-beta.13
   '@rjsf/utils': 5.0.0-beta.13
@@ -22,6 +23,7 @@ specifiers:
   ajv: ^8.11.2
   antd: 4.22.8
   axios: ^0.27.2
+  classnames: ^2.3.2
   dayjs: ^1.11.6
   eslint: ^8.24.0
   eslint-config-airbnb: ^19.0.4
@@ -49,6 +51,7 @@ dependencies:
   '@formily/core': 2.2.13
   '@formily/react': 2.2.13_34zn46vchx4zwynjs5ph7vopou
   '@formily/reactive': 2.2.13
+  '@formily/shared': 2.2.13
   '@rjsf/antd': 5.0.0-beta.13_pzddfras46e53bq7dgiwsjj57i
   '@rjsf/core': 5.0.0-beta.13_j5gb72ex5nnkkxhdamiyx63hiy
   '@rjsf/utils': 5.0.0-beta.13_react@18.2.0
@@ -58,6 +61,7 @@ dependencies:
   ajv: 8.11.2
   antd: 4.22.8_biqbaboplfbrettd7655fr4n2y
   axios: 0.27.2
+  classnames: 2.3.2
   dayjs: 1.11.6
   eslint-plugin-import: 2.26.0_gofx6msuqd4luqedfouzks2s4u
   eslint-plugin-jsx-a11y: 6.6.1_eslint@8.24.0

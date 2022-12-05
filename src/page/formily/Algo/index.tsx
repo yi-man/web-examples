@@ -4,7 +4,8 @@ import { createSchemaField, ISchema } from '@formily/react'
 import {
   Form,
   FormItem,
-  FormLayout,
+  // FormLayout,
+  FormCollapse,
   Input,
   Select,
   Cascader,
@@ -15,12 +16,14 @@ import {
   ArrayItems,
   Editable,
   FormButtonGroup,
-  NumberPicker
+  NumberPicker,
+  Checkbox
 } from '@formily/antd'
 import { action } from '@formily/reactive'
 import { Card, Button, Spin } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
 import {schema} from './schema'
+import FormLayout from './Layout'
 
 const form = createForm({
   validateFirst: true,
@@ -52,7 +55,8 @@ const SchemaField = createSchemaField({
     IDUpload,
     ArrayItems,
     Editable,
-    NumberPicker
+    NumberPicker,
+    FormCollapse,Checkbox
   },
   scope: {
     fetchAddress: (field: any) => {
@@ -142,6 +146,7 @@ export default () => {
             labelCol={5}
             wrapperCol={16}
             onAutoSubmit={console.log}
+            layout="vertical"
           >
             <SchemaField schema={schema} />
             <FormButtonGroup.FormItem>

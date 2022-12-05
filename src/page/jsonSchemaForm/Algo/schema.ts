@@ -124,6 +124,7 @@ import { RJSFSchema, UiSchema } from "@rjsf/utils";
                   type: 'number',
                   minimum: 0,
                   maximum: 1,
+                  format: 'expression'
                 }
               }
               
