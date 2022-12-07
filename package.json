@@ -22,7 +22,7 @@
     "@xstate/react": "^3.0.1",
     "ahooks": "^3.7.1",
     "ajv": "^8.11.2",
-    "antd": "4.22.8",
+    "antd": "^4.24.3",
     "axios": "^0.27.2",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.6",
@@ -37,6 +37,7 @@
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
     "react-router-dom": "^6.4.1",
+    "reactflow": "^11.3.3",
     "rxjs": "^7.5.7",
     "xstate": "^4.33.6"
   },
