@@ -1,9 +1,12 @@
 import { Button, Drawer, Tabs } from 'antd';
 import React, { useState } from 'react';
 import {FormGroup} from './FormGroup'
+import { ISchema } from '@formily/react'
 
-interface ConfigMenuProps {}
-export const ConfigMenu: React.FC<ConfigMenuProps> = () => {
+interface ConfigMenuProps {
+  schema: ISchema
+}
+export const ConfigMenu: React.FC<ConfigMenuProps> = ({schema}) => {
 
   return (
    
@@ -12,7 +15,7 @@ export const ConfigMenu: React.FC<ConfigMenuProps> = () => {
    >
     <Tabs style={{height: '100%', overflow: 'scroll'}}>
       <Tabs.TabPane tab="trainer1 (fenode)" key="1">
-        <FormGroup />
+        <FormGroup schema={schema}/>
       </Tabs.TabPane>
       <Tabs.TabPane tab="trainer2 (fenode)" key="2">
         trainer2

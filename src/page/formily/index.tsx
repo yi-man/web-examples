@@ -313,6 +313,7 @@ export default () => {
       <Card title="编辑用户" style={{ width: 620 }}>
         <Spin spinning={loading}>
           <Form
+            name='form1'
             form={form}
             labelCol={5}
             wrapperCol={16}

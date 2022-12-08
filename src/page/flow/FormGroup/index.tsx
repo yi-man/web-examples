@@ -1,19 +1,12 @@
-import {Form} from 'antd'
-import Form1 from '../../formily'
-import Form2 from '../../formily/Algo'
+import SchemaForm from './SchemaForm'
+import { ISchema } from '@formily/react'
+import { FC } from 'react'
 
-
-export const FormGroup = () => {
+interface FormGroupProps {
+  schema: ISchema
+}
+export const FormGroup: FC<FormGroupProps> = ({schema}) => {
   return (
-    <Form.Provider
-      onFormFinish={name => {
-        if (name === 'form1') {
-          // Do something...
-        }
-      }}
-    >
-      <Form1/>
-      <Form2/>
-    </Form.Provider>
+    <SchemaForm schema={schema} />
   )
 }

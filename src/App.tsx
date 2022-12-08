@@ -12,6 +12,7 @@ import {StateMachine as StepsStateMachine} from './page/stateMachine/steps'
 import {RxDemo} from './page/rx'
 import Formily from './page/formily'
 import FormilyAlgo from './page/formily/Algo'
+import FormilyCollapse from './page/formily/Collapse'
 
 import {JsonSchemaForm} from './page/jsonSchemaForm'
 import {JsonSchemaForm as Algo} from './page/jsonSchemaForm/Algo'
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
     element: <JsonSchemaForm />,
   },
   
+  {
+    path: "/formily/collapse",
+    element: <FormilyCollapse />,
+  },
   {
     path: "/formily/algo",
     element: <FormilyAlgo />,

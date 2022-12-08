@@ -1,5 +1,6 @@
 import React, { DragEvent } from 'react';
 import styles from './dnd.module.css';
+import {nodes} from './nodes'
 
 const onDragStart = (event: DragEvent, nodeType: string) => {
   event.dataTransfer.setData('application/reactflow', nodeType);
@@ -12,6 +13,20 @@ const Sidebar = () => {
       <div className={styles.description}>
         You can drag these nodes to the pane on the left.
       </div>
+
+      {
+        nodes.map((node) => {
+          return (
+            <div
+              className='react-flow__node-default'
+              onDragStart={(event: DragEvent) => onDragStart(event, node.id)}
+              draggable
+            >
+              {node.data.label}
+            </div>
+          )
+        })
+      }
       <div
         className='react-flow__node-input'
         onDragStart={(event: DragEvent) => onDragStart(event, 'input')}

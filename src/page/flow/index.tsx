@@ -1,4 +1,4 @@
-import React, { useState, DragEvent, useCallback } from 'react';
+import React, { useState, DragEvent, useCallback, useMemo } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -14,69 +14,43 @@ import ReactFlow, {
   MarkerType
 } from 'reactflow';
 import {message} from 'antd'
+import { ISchema } from '@formily/react'
 
 import Sidebar from './Sidebar';
 import 'reactflow/dist/style.css'
 import './rewrite.css'
 import {ConfigMenu} from './ConfigMenu'
+import {nodes as nodeModels, initialNodes} from './nodes'
+import {nodeOrigin, defaultEdgeOptions, getId, canConnect, onDragOver} from './utils'
 
 import styles from './dnd.module.css';
 
-type SpecificNode = Omit<Node, 'type'> & {
-  type: 'input' | 'output' | 'default'
-}
 
-const initialNodes: SpecificNode[] = [
-  {
-    id: '1',
-    type: 'input',
-    data: { label: 'input node' },
-    position: { x: 250, y: 100 },
-  },
-];
 
-const defaultEdgeOptions = {
-  markerEnd: {
-    type: MarkerType.ArrowClosed,
-  },
-  style: {
-    strokeWidth: 2,
-  },
-};
-const onDragOver = (event: DragEvent) => {
-  event.preventDefault();
-  event.dataTransfer.dropEffect = 'move';
-};
 
-let id = 0;
-const getId = () => `dndnode_${id++}`;
-
-const nodeOrigin: NodeOrigin = [0.5, 0.5];
-
-const canConnect = (params: Connection | Edge, nodes: Node[]) => {
-  // const source = params.source as string
-  // const target = params.target as string
-  // const sourceNode = nodes.find(node => node.id === source) as SpecificNode
-  // const targetNode = nodes.find(node => node.id === target) as SpecificNode
-
-  // return sourceNode?.type !== 'input' && targetNode.type !== 'output'
-
-  return true
-}
 
 
 const DnDFlow = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance>();
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const [isOpen, setIsOpen] = useState<boolean>(false)
 
-  const openDrawer = useCallback(()=>{
-    setIsOpen(true)
-  }, [])
-  const closeDrawer = useCallback(()=>{
-    setIsOpen(false)
-  }, [])
+  const initialSchema = useMemo(() => {
+    const s: ISchema =  {
+      type: 'object',
+      properties: {}
+    }
+
+
+    initialNodes.forEach(n => {
+      // @ts-ignore
+      s.properties[n.id] = n.data.schema
+    })
+
+    return s
+  }, [initialNodes])
+  const [schema, setSchema] = useState<ISchema>(initialSchema)
+
 
   const onConnect = useCallback((params: Connection | Edge) => {
     if(canConnect(params, nodes)) {
@@ -92,31 +66,55 @@ const DnDFlow = () => {
 
     if (reactFlowInstance) {
       const type = event.dataTransfer.getData('application/reactflow');
+
       const position = reactFlowInstance.project({
         x: event.clientX - 180,
         y: event.clientY,
       });
+
+      const nodeModel = nodeModels.find(node => node.id === type)
+
       const newNode: Node = {
-        id: getId(),
+        id: getId(nodeModel?.id),
         type,
         position,
         data: { label: `${type} node` },
       };
 
+      if(nodeModel) {
+        newNode.type = nodeModel.type,
+        newNode.data = nodeModel.data
+      }
+
       setNodes((nds) => nds.concat(newNode));
+
+      setSchema((s) => {
+        if(s.properties) {
+          (s.properties as any)[newNode.id] = newNode.data.schema
+        }
+
+        return s
+      })
     }
   };
-
-  const onNodeClick = useCallback((event: React.MouseEvent, node: Node)=>{
-    openDrawer()
-  }, [])
 
   const onNodeMouseEnter = useCallback((event: React.MouseEvent, node: Node) => {
   }, [])
 
   const onEdgeContextMenu= useCallback((event: React.MouseEvent, edge: Edge) => {
-    console.log(11111111111, edge)
   }, [])
+
+  const onNodesDelete = useCallback((newNodes: Node[])=>{
+    setSchema((s) => {
+      newNodes.forEach((n) => {
+        // @ts-ignore
+        delete s.properties[n.id]
+      })
+      
+      return s
+    })
+  }, [])
+
 
   return (
     <div className={styles.dndflow}>
@@ -128,7 +126,6 @@ const DnDFlow = () => {
             edges={edges}
             onEdgesChange={onEdgesChange}
             onNodesChange={onNodesChange}
-            onNodeClick={onNodeClick}
             onConnect={onConnect}
             onInit={onInit}
             onDrop={onDrop}
@@ -137,12 +134,13 @@ const DnDFlow = () => {
             onNodeMouseEnter={onNodeMouseEnter}
             // onEdgeDoubleClick
             defaultEdgeOptions={defaultEdgeOptions}
+            onNodesDelete={onNodesDelete}
           >
             <Controls />
             <Background />
           </ReactFlow>
         </div>
-        <ConfigMenu />
+        <ConfigMenu schema={schema}/>
       </ReactFlowProvider>
     </div>
   );
