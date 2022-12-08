@@ -33,13 +33,7 @@ export const schema: {[k: string]: ISchema} = {
       interaction_params: {
         type: 'object',
         title: '交互参数',
-        'x-decorator': 'FormLayout',
-        'x-decorator-props': {
-          bordered: true,
-          style: {
-            border: '1px solid red'
-          }
-        },
+        'x-decorator': 'Section',
         properties: {
           save_frequency: {
             type: 'string',
@@ -63,7 +57,7 @@ export const schema: {[k: string]: ISchema} = {
       train_params: {
         type: 'object',
         title: '训练参数',
-        'x-decorator': 'FormLayout',
+        'x-decorator': 'Section',
         'x-decorator-props': {
           labelCol: 6
         },
@@ -98,13 +92,13 @@ export const schema: {[k: string]: ISchema} = {
           downsampling: {
             type: 'object',
             title: '下载样本',
-            'x-decorator': 'FormLayout',
+            'x-decorator': 'Section',
            
             properties: {
               column: {
                 type: 'object',
                 title: '列',
-                'x-decorator': 'FormLayout',
+                'x-decorator': 'Section',
                 'x-decorator-props': {
                   labelCol: 8
                 },
@@ -129,7 +123,7 @@ export const schema: {[k: string]: ISchema} = {
               row: {
                 type: 'object',
                 title: '行',
-                'x-decorator': 'FormLayout',
+                'x-decorator': 'Section',
                 'x-decorator-props': {
                   labelCol: 8
                 },
