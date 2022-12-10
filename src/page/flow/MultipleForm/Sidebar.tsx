@@ -1,6 +1,6 @@
-import React, { DragEvent } from 'react';
+import { DragEvent } from 'react';
 import styles from './dnd.module.css';
-import {nodes} from './nodes'
+import { nodeModels } from './useSchema/nodeModels';
 
 const onDragStart = (event: DragEvent, nodeType: string) => {
   event.dataTransfer.setData('application/reactflow', nodeType);
@@ -15,7 +15,7 @@ const Sidebar = () => {
       </div>
 
       {
-        nodes.map((node) => {
+        nodeModels.map((node) => {
           return (
             <div
               className='react-flow__node-default'

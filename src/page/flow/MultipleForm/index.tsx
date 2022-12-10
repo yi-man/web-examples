@@ -1,30 +1,19 @@
-import React, { useState, DragEvent, useCallback, useMemo } from 'react';
+import { message } from 'antd';
+import React, { DragEvent, useCallback, useState } from 'react';
 import ReactFlow, {
-  ReactFlowProvider,
-  addEdge,
-  ReactFlowInstance,
-  Connection,
-  Edge,
-  Node,
-  useNodesState,
-  useEdgesState,
-  Controls,
-  NodeOrigin,
-  Background,
-  MarkerType
+  addEdge, Background, Connection, Controls, Edge,
+  Node, ReactFlowInstance, ReactFlowProvider, useEdgesState, useNodesState
 } from 'reactflow';
-import {message} from 'antd'
-import { ISchema } from '@formily/react'
 
+import 'reactflow/dist/style.css';
+import { ConfigMenu } from './ConfigMenu';
+import './rewrite.css';
 import Sidebar from './Sidebar';
-import 'reactflow/dist/style.css'
-import './rewrite.css'
-import {ConfigMenu} from './ConfigMenu'
-import {nodes as nodeModels, initialNodes, DataNode} from './nodes'
-import {nodeOrigin, defaultEdgeOptions, getId, canConnect, onDragOver} from './utils'
+import { DataNode, initialNodes, nodeModels } from './useSchema/nodeModels';
+import { canConnect, defaultEdgeOptions, getId, nodeOrigin, onDragOver } from './utils';
 
 import styles from './dnd.module.css';
-import {useSchema} from './useSchema'
+import { useSchema } from './useSchema';
 
 
 const DnDFlow = () => {

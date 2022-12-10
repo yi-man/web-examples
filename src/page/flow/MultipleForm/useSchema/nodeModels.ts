@@ -9,7 +9,7 @@ export type DataNode = Omit<Node<DataType>, 'type'> & {
   type: 'input' | 'output' | 'default'
 }
 
-export const nodes = [
+export const nodeModels = [
   {
     id: 'dataset',
     type: 'input',
@@ -38,7 +38,7 @@ export const nodes = [
 
 export const initialNodes = [
   {
-    ...nodes[0],
+    ...nodeModels[0],
     id: 'dataset1',
     position: { x: 250, y: 100 },
   } ,

@@ -1,14 +1,7 @@
-import {useState, useMemo, useCallback} from 'react'
-import { ISchema, SchemaProperties } from '@formily/react'
-import {nodes as nodeModels, initialNodes, DataNode} from './nodes'
-import {
-  Node,
-} from 'reactflow';
 
-export type SchemaState = {[k: string]: {[k: string]: ISchema}}
+import { ISchema, SchemaProperties } from '@formily/react';
+
 type AnySchemaProperties = SchemaProperties<any, any, any, any, any, any, any, any>
-// 假设有两个trainer
-const trainers = ['trainer1', 'trainer2'] as const 
 
 type UiType = 'Input' | 'Password' | 'Select' | 'Checkbox' | 'NumberPicker'
 type UiSchema = {
@@ -43,7 +36,7 @@ const uiSchema: UiSchema = {
   }
 }
 
-const decoratorSchema = (schema: ISchema) => {
+export const decoratorSchema = (schema: ISchema) => {
   if(schema.type === 'object') {
     if(!schema['x-decorator']){
       schema['x-decorator'] = 'Section'
@@ -78,55 +71,4 @@ const decoratorSchema = (schema: ISchema) => {
   } 
 
   return schema
-}
-
-const add = (schema: SchemaState, n: DataNode) => {
-  trainers.forEach((t, index) => {
-    if(n.data.schema[index]) {
-      schema[t][n.id] =  decoratorSchema(n.data.schema[index])
-    }
-  })
-}
-
-const del = (schema: SchemaState, deletedNodes: DataNode[]) => {
-  deletedNodes.forEach((n) => {
-    trainers.forEach((t, index) => {
-        delete schema[t][n.id]  
-    })
-  })
-}
-
-export const useSchema = () => {
-
-  const initialSchema = useMemo(() => {
-    const schema: SchemaState = {}
-    trainers.forEach(t => {
-      schema[t] = {}
-    })
-
-    initialNodes.forEach(n => {
-      add(schema, n)
-    })
-
-    return schema
-  }, [initialNodes])
-
-  const [schema, setSchema] = useState<SchemaState>(initialSchema)
-
-  const addSchema = useCallback((n: DataNode) => {
-    add(schema, n)
-    setSchema(schema)
-  }, [schema])
-
-  const deleteSchema = useCallback((deletedNodes: DataNode[]) => {
-    del(schema, deletedNodes)
-    setSchema(schema)
-  }, [schema])
-
-  return {
-    schema,
-    addSchema,
-    deleteSchema,
-    selectedSchema: trainers[0]
-  }
 }
