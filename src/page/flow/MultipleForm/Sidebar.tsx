@@ -28,7 +28,7 @@ const Sidebar = () => {
           )
         })
       }
-      <div
+      {/* <div
         className='react-flow__node-input'
         onDragStart={(event: DragEvent) => onDragStart(event, 'input')}
         draggable
@@ -48,7 +48,7 @@ const Sidebar = () => {
         draggable
       >
         Output Node
-      </div>
+      </div> */}
     </aside>
   );
 };

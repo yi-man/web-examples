@@ -24,7 +24,7 @@ const DnDFlow = () => {
 
   const [selectedTab, setSelectedTab] = useState<string>(selectedSchema)
 
-  const onInit = (rfi: ReactFlowInstance) => {
+  const onInit = useCallback((rfi: ReactFlowInstance) => {
     setReactFlowInstance(rfi);
 
     const stage = document.getElementById('stage')
@@ -33,7 +33,7 @@ const DnDFlow = () => {
         e.preventDefault();
       }
     }
-  }
+  }, [])
   
   const onConnect = useCallback((params: Connection | Edge) => {
     if(canConnect(params, nodes)) {
@@ -43,7 +43,7 @@ const DnDFlow = () => {
     }
   }, [nodes])
 
-  const onDrop = (event: DragEvent) => {
+  const onDrop = useCallback((event: DragEvent) => {
     event.preventDefault();
 
     if (reactFlowInstance) {
@@ -72,13 +72,7 @@ const DnDFlow = () => {
 
       addSchema(newNode)
     }
-  };
-
-  const onNodeMouseEnter = useCallback((event: React.MouseEvent, node: Node) => {
-  }, [])
-
-  const onEdgeContextMenu= useCallback((event: React.MouseEvent, edge: Edge) => {
-  }, [])
+  }, [reactFlowInstance]);
 
   const onNodesDelete = useCallback((newNodes: Node[])=>{
     deleteSchema(newNodes as DataNode[])
@@ -88,8 +82,6 @@ const DnDFlow = () => {
     const element = document.getElementById(`${selectedTab}-${node.id}`)
     element?.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
   }, [selectedTab])
-
-  console.log(111111111111, schema.trainer1)
 
   return (
     <div className={styles.dndflow}>
@@ -106,8 +98,6 @@ const DnDFlow = () => {
             onDrop={onDrop}
             onDragOver={onDragOver}
             nodeOrigin={nodeOrigin}
-            onNodeMouseEnter={onNodeMouseEnter}
-            // onEdgeDoubleClick
             defaultEdgeOptions={defaultEdgeOptions}
             onNodesDelete={onNodesDelete}
             onNodeClick={onNodeClick}
