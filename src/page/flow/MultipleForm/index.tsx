@@ -100,6 +100,7 @@ const DnDFlow = () => {
     element?.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
   }, [selectedTab])
 
+  console.log(111111111111, schema.trainer1)
 
   return (
     <div className={styles.dndflow}>
