@@ -17,7 +17,8 @@ import FormilyCollapse from './page/formily/Collapse'
 import {JsonSchemaForm} from './page/jsonSchemaForm'
 import {JsonSchemaForm as Algo} from './page/jsonSchemaForm/Algo'
 
-import Flow from './page/flow'
+import OneFormFlow from './page/flow/OneForm'
+import MultipleFormFlow from './page/flow/MultipleForm'
 
 
 
@@ -56,10 +57,13 @@ window.addEventListener('pushState', function(e) {
 });
 
 const router = createBrowserRouter([
-  
   {
-    path: "/flow",
-    element: <Flow />,
+    path: "/flow/one",
+    element: <OneFormFlow />,
+  },
+  {
+    path: "/multiple",
+    element: <MultipleFormFlow />,
   },
   {
     path: "/jsf/algo",
