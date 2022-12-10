@@ -1,7 +1,6 @@
 import { Button, Drawer, Tabs } from 'antd';
 import React, { useState } from 'react';
 import {FormGroup} from './FormGroup'
-import { ISchema } from '@formily/react'
 import type {SchemaState} from './useSchema'
 
 interface ConfigMenuProps {
@@ -17,7 +16,7 @@ export const ConfigMenu: React.FC<ConfigMenuProps> = ({schema}) => {
       {
         Object.keys(schema).map(s => (
           <Tabs.TabPane tab={s} key={s}>
-            <FormGroup schema={schema[s]}/>
+            <FormGroup schema={schema[s]} name={s}/>
           </Tabs.TabPane>
         ))
       }

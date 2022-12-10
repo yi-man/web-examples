@@ -51,8 +51,6 @@ interface Props{
 }
 export default ({schema, form}: Props) => {
   const [loading, setLoading] = useState(false)
-
-  console.log(333333333, schema, form)
   return (
     <div
       style={{

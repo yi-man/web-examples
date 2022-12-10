@@ -1,39 +1,30 @@
 import SchemaForm from './SchemaForm'
-import { ISchema, Form } from '@formily/react'
+import { ISchema  } from '@formily/react'
 import { FC, useCallback, useEffect, useMemo, useState } from 'react'
-import {Divider} from 'antd'
-import { createForm } from '@formily/core'
-
+import {Button, Divider} from 'antd'
+import {FormGroupCache} from './FormCache'
 
 interface FormGroupProps {
+  name: string;
   schema: {[k: string]: ISchema}
 }
 
-class FormCache{
-  cache: {[k:string]: Form}
 
-  constructor() {
-    this.cache = {}
+const formGroupCache = new FormGroupCache()
+
+export const FormGroup: FC<FormGroupProps> = ({name, schema}) => {
+  const formCache = useMemo(() => {
+    return formGroupCache.getFormCache(name)
+  }, [name])
+
+
+  useEffect(() => {
+    formCache.removeExpiredForm(Object.keys(schema))
+  }, [Object.keys(schema)])
+
+  const onSubmit = () => {
+    formCache.submit().then((d)=> {console.log(d)})
   }
-  
-  setForm(k: string) {
-    if(!this.cache[k]) {
-      this.cache[k] = createForm({
-        validateFirst: true,
-      })
-    }
-  }
-
-  getForm(k: string) {
-    this.setForm(k)
-
-    return this.cache[k]
-  }
-}
-
-const formCache = new FormCache()
-
-export const FormGroup: FC<FormGroupProps> = ({schema}) => {  
 
   return (
     <div>
@@ -48,6 +39,7 @@ export const FormGroup: FC<FormGroupProps> = ({schema}) => {
           )
         })
       }
+      <Button type='primary' onClick={onSubmit}>提交</Button>
     </div>
   )
 }
