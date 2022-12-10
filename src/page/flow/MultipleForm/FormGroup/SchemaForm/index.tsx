@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { createForm } from '@formily/core'
+import React, { useState, useEffect, forwardRef } from 'react'
+import { createForm, Form as CoreForm } from '@formily/core'
 import { createSchemaField, ISchema } from '@formily/react'
 import {
   Form,
@@ -25,9 +25,9 @@ import Section from './Section'
 
 const {Title} = Typography
 
-const form = createForm({
-  validateFirst: true,
-})
+// const form = createForm({
+//   validateFirst: true,
+// })
 const SchemaField = createSchemaField({
   components: {
     FormItem,
@@ -46,12 +46,13 @@ const SchemaField = createSchemaField({
   }
 })
 interface Props{
-  schema: ISchema
+  schema: ISchema,
+  form: CoreForm
 }
-export default ({schema}: Props) => {
+export default ({schema, form}: Props) => {
   const [loading, setLoading] = useState(false)
 
-  console.log(333333333, schema)
+  console.log(333333333, schema, form)
   return (
     <div
       style={{

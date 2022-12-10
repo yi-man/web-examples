@@ -4,7 +4,6 @@ export const schema: {[k: string]: ISchema} = {
   dataset: {
     type: 'object',
     title: '选择数据集',
-    'x-decorator': 'Section',
     properties: {
       ds: {
         type: 'string',
@@ -21,7 +20,6 @@ export const schema: {[k: string]: ISchema} = {
   xgb:  {
     type: 'object',
     title: '纵向xgb',
-    'x-decorator': 'Section',
     properties: {
       interaction_params: {
         type: 'object',
@@ -183,7 +181,6 @@ export const schema: {[k: string]: ISchema} = {
   'data-cut': {
     type: 'object',
     title: '数据切割',
-    'x-decorator': 'Section',
     properties: {
       username: {
         type: 'string',

@@ -129,7 +129,6 @@ type ComposeFormLayout = React.FC<React.PropsWithChildren<IFormLayoutProps>> & {
 const ConnectFormLayout: ComposeFormLayout = connect(
   FormLayout,
   mapProps((props, field) => {
-    console.log(888888888, props, field)
     return {
       label: field.title,
     }
