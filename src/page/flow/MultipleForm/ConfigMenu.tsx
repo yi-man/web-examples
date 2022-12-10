@@ -4,16 +4,12 @@ import {FormGroup} from './FormGroup'
 import { ISchema } from '@formily/react'
 import type {SchemaState} from './useSchema'
 
-
 interface ConfigMenuProps {
   schema: SchemaState
 }
 export const ConfigMenu: React.FC<ConfigMenuProps> = ({schema}) => {
 
-  const TabLeng = Object.keys(schema).length
-
   return (
-   
    <div
     style={{ width:372, marginLeft:24,  height: '100%'}}
    >
@@ -25,18 +21,6 @@ export const ConfigMenu: React.FC<ConfigMenuProps> = ({schema}) => {
           </Tabs.TabPane>
         ))
       }
-      {/* <Tabs.TabPane tab="trainer1 (fenode)" key="1">
-        <FormGroup schema={schema}/>
-      </Tabs.TabPane>
-      <Tabs.TabPane tab="trainer2 (fenode)" key="2">
-        trainer2
-      </Tabs.TabPane>
-      <Tabs.TabPane tab="trainer3 (fenode)" key="3">
-        trainer3
-      </Tabs.TabPane>
-      <Tabs.TabPane tab="trainer4 (fenode)" key="4">
-        trainer4
-      </Tabs.TabPane> */}
     </Tabs>
  </div>
   );

@@ -3,9 +3,6 @@ import { usePrefixCls } from './usePrefixCls'
 import cls from 'classnames'
 import {useResponsiveFormLayout} from './useResponsiveFormLayout'
 import { connect, mapProps } from '@formily/react'
-import { Typography } from 'antd';
-
-const { Title } = Typography;
 
 export interface IFormLayoutProps {
   label?: string;
@@ -66,7 +63,7 @@ export const useFormLayout = () => ({
   ...useFormShallowLayout(),
 })
 
-export const FormLayout: React.FC<React.PropsWithChildren<IFormLayoutProps>> & {
+const FormLayout: React.FC<React.PropsWithChildren<IFormLayoutProps>> & {
   useFormLayout: () => IFormLayoutContext
   useFormDeepLayout: () => IFormLayoutContext
   useFormShallowLayout: () => IFormLayoutContext
@@ -108,7 +105,7 @@ export const FormLayout: React.FC<React.PropsWithChildren<IFormLayoutProps>> & {
   }
   return (
     <div ref={ref} className={layoutClassName} style={style}>
-      <Title level={2}>{label}</Title>
+      <div style={{fontSize:14, fontWeight: 600, marginBottom: 10}}>{label}</div>
       <div>
       {renderChildren()}
 
@@ -129,13 +126,14 @@ FormLayout.useFormLayout = useFormLayout
 type ComposeFormLayout = React.FC<React.PropsWithChildren<IFormLayoutProps>> & {
   BaseItem?: React.FC<React.PropsWithChildren<IFormLayoutProps>>
 }
-export const FormLayout1: ComposeFormLayout = connect(
+const ConnectFormLayout: ComposeFormLayout = connect(
   FormLayout,
   mapProps((props, field) => {
+    console.log(888888888, props, field)
     return {
       label: field.title,
     }
   })
 )
 
-export default FormLayout1
+export default ConnectFormLayout

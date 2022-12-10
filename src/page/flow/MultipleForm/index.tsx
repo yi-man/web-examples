@@ -91,6 +91,7 @@ const DnDFlow = () => {
   }, [])
 
 
+  console.log(111111111111, schema)
   return (
     <div className={styles.dndflow}>
       <ReactFlowProvider>

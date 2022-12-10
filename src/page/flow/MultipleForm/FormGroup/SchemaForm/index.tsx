@@ -20,8 +20,10 @@ import {
   Checkbox,
   Password
 } from '@formily/antd'
-import { Card, Button, Spin } from 'antd'
+import { Card, Button, Spin, Typography } from 'antd'
 import Section from './Section'
+
+const {Title} = Typography
 
 const form = createForm({
   validateFirst: true,
@@ -49,6 +51,7 @@ interface Props{
 export default ({schema}: Props) => {
   const [loading, setLoading] = useState(false)
 
+  console.log(333333333, schema)
   return (
     <div
       style={{
@@ -56,6 +59,7 @@ export default ({schema}: Props) => {
       }}
     >
         <Spin spinning={loading} style={{ width: 620 }}>
+          <Title level={5}>{schema.title}</Title>
           <Form
             form={form}
             labelCol={5}
@@ -64,11 +68,11 @@ export default ({schema}: Props) => {
             layout="vertical"
           >
             <SchemaField schema={schema} />
-            <FormButtonGroup.FormItem>
+            {/* <FormButtonGroup.FormItem>
               <Submit block size="large">
                 提交
               </Submit>
-            </FormButtonGroup.FormItem>
+            </FormButtonGroup.FormItem> */}
           </Form>
         </Spin>
     </div>
