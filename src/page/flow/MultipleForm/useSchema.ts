@@ -56,7 +56,8 @@ export const useSchema = () => {
   return {
     schema,
     addSchema,
-    deleteSchema
+    deleteSchema,
+    selectedSchema: trainers[0]
   }
 
 }

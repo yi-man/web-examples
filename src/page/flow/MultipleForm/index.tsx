@@ -27,17 +27,13 @@ import styles from './dnd.module.css';
 import {useSchema} from './useSchema'
 
 
-
-
-
-// 假设有两个trainer
-const trainers = ['trainer1', 'trainer2'] as const 
-
 const DnDFlow = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance>();
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const {schema, addSchema, deleteSchema} = useSchema()
+  const {schema, selectedSchema, addSchema, deleteSchema} = useSchema()
+
+  const [selectedTab, setSelectedTab] = useState<string>(selectedSchema)
 
   const onInit = (rfi: ReactFlowInstance) => setReactFlowInstance(rfi);
   
@@ -90,8 +86,12 @@ const DnDFlow = () => {
     deleteSchema(newNodes as DataNode[])
   }, [])
 
+  const onNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
+    const element = document.getElementById(`${selectedTab}-${node.id}`)
+    element?.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
+  }, [selectedTab])
 
-  console.log(111111111111, schema)
+
   return (
     <div className={styles.dndflow}>
       <ReactFlowProvider>
@@ -111,12 +111,13 @@ const DnDFlow = () => {
             // onEdgeDoubleClick
             defaultEdgeOptions={defaultEdgeOptions}
             onNodesDelete={onNodesDelete}
+            onNodeClick={onNodeClick}
           >
             <Controls />
             <Background />
           </ReactFlow>
         </div>
-        <ConfigMenu schema={schema}/>
+        <ConfigMenu schema={schema} activeKey={selectedTab} onTabClick={(k) => setSelectedTab(k)}/>
       </ReactFlowProvider>
     </div>
   );

@@ -27,12 +27,12 @@ export const FormGroup: FC<FormGroupProps> = ({name, schema}) => {
   }
 
   return (
-    <div>
+    <div id={`${name}`}>
       {
         Object.keys(schema).map(k => {
           const form = formCache.getForm(k)
           return (
-            <div key={k}>
+            <div key={k} id={`${name}-${k}`}>
               <SchemaForm schema={schema[k]} form={form} />
               <Divider/> 
             </div>
