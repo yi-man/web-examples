@@ -30,28 +30,32 @@ import styles from './dnd.module.css';
 
 
 
+// 假设有两个trainer
+const trainers = ['trainer1', 'trainer2'] as const 
+
 const DnDFlow = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance>();
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   const initialSchema = useMemo(() => {
-    const s: ISchema =  {
-      type: 'object',
-      properties: {}
+    const schemas: {[k: string]: ISchema} = {
+      [trainers[0]]: {},
+      [trainers[1]]: {},
     }
 
-
     initialNodes.forEach(n => {
-      // @ts-ignore
-      s.properties[n.id] = n.data.schema
+      schemas[trainers[0]] = n.data.schema[0]
+      schemas[trainers[1]] = n.data.schema[1]
     })
 
-    return s
+    return schemas
   }, [initialNodes])
-  const [schema, setSchema] = useState<ISchema>(initialSchema)
+  const [schema, setSchema] = useState<{[k: string]: ISchema}>(initialSchema)
 
 
+  const onInit = (rfi: ReactFlowInstance) => setReactFlowInstance(rfi);
+  
   const onConnect = useCallback((params: Connection | Edge) => {
     if(canConnect(params, nodes)) {
       setEdges((eds) => addEdge(params, eds))
@@ -59,7 +63,6 @@ const DnDFlow = () => {
       message.error('无法连接')
     }
   }, [nodes])
-  const onInit = (rfi: ReactFlowInstance) => setReactFlowInstance(rfi);
 
   const onDrop = (event: DragEvent) => {
     event.preventDefault();

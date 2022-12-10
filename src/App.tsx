@@ -62,7 +62,7 @@ const router = createBrowserRouter([
     element: <OneFormFlow />,
   },
   {
-    path: "/multiple",
+    path: "/flow/multiple",
     element: <MultipleFormFlow />,
   },
   {
