@@ -1,12 +1,5 @@
 import { ISchema } from '@formily/react'
 
-
-const decorator = {
-  default: {
-    'x-decorator': 'FormItem'
-  }
-}
-
 export const schema: {[k: string]: ISchema} = {
   dataset: {
     type: 'object',

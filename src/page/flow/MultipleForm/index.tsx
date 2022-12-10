@@ -20,11 +20,11 @@ import Sidebar from './Sidebar';
 import 'reactflow/dist/style.css'
 import './rewrite.css'
 import {ConfigMenu} from './ConfigMenu'
-import {nodes as nodeModels, initialNodes} from './nodes'
+import {nodes as nodeModels, initialNodes, DataNode} from './nodes'
 import {nodeOrigin, defaultEdgeOptions, getId, canConnect, onDragOver} from './utils'
 
 import styles from './dnd.module.css';
-
+import {useSchema} from './useSchema'
 
 
 
@@ -37,22 +37,7 @@ const DnDFlow = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance>();
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-
-  const initialSchema = useMemo(() => {
-    const schemas: {[k: string]: ISchema} = {
-      [trainers[0]]: {},
-      [trainers[1]]: {},
-    }
-
-    initialNodes.forEach(n => {
-      schemas[trainers[0]] = n.data.schema[0]
-      schemas[trainers[1]] = n.data.schema[1]
-    })
-
-    return schemas
-  }, [initialNodes])
-  const [schema, setSchema] = useState<{[k: string]: ISchema}>(initialSchema)
-
+  const {schema, addSchema, deleteSchema} = useSchema()
 
   const onInit = (rfi: ReactFlowInstance) => setReactFlowInstance(rfi);
   
@@ -68,7 +53,7 @@ const DnDFlow = () => {
     event.preventDefault();
 
     if (reactFlowInstance) {
-      const type = event.dataTransfer.getData('application/reactflow');
+      const type = event.dataTransfer.getData('application/reactflow') as DataNode['type'];
 
       const position = reactFlowInstance.project({
         x: event.clientX - 180,
@@ -77,11 +62,11 @@ const DnDFlow = () => {
 
       const nodeModel = nodeModels.find(node => node.id === type)
 
-      const newNode: Node = {
+      const newNode: DataNode = {
         id: getId(nodeModel?.id),
         type,
         position,
-        data: { label: `${type} node` },
+        data: { label: `${type} node`, schema: [] },
       };
 
       if(nodeModel) {
@@ -91,13 +76,7 @@ const DnDFlow = () => {
 
       setNodes((nds) => nds.concat(newNode));
 
-      setSchema((s) => {
-        if(s.properties) {
-          (s.properties as any)[newNode.id] = newNode.data.schema
-        }
-
-        return s
-      })
+      addSchema(newNode)
     }
   };
 
@@ -108,14 +87,7 @@ const DnDFlow = () => {
   }, [])
 
   const onNodesDelete = useCallback((newNodes: Node[])=>{
-    setSchema((s) => {
-      newNodes.forEach((n) => {
-        // @ts-ignore
-        delete s.properties[n.id]
-      })
-      
-      return s
-    })
+    deleteSchema(newNodes as DataNode[])
   }, [])
 
 

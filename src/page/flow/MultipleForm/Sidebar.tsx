@@ -21,6 +21,7 @@ const Sidebar = () => {
               className='react-flow__node-default'
               onDragStart={(event: DragEvent) => onDragStart(event, node.id)}
               draggable
+              key={node.id}
             >
               {node.data.label}
             </div>

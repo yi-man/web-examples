@@ -3,10 +3,16 @@ import { ISchema } from '@formily/react'
 import { FC } from 'react'
 
 interface FormGroupProps {
-  schema: ISchema
+  schema: {[k: string]: ISchema}
 }
 export const FormGroup: FC<FormGroupProps> = ({schema}) => {
   return (
-    <SchemaForm schema={schema} />
+    <div>
+      {
+        Object.keys(schema).map(k => {
+          return <SchemaForm schema={schema[k]} key={k} />
+        })
+      }
+    </div>
   )
 }
