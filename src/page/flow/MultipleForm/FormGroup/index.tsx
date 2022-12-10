@@ -23,7 +23,8 @@ export const FormGroup: FC<FormGroupProps> = ({name, schema}) => {
   }, [Object.keys(schema)])
 
   const onSubmit = () => {
-    formCache.submit().then((d)=> {console.log(d)})
+    formCache.submit()
+    .then((d)=> {console.log('-----FormGroup response----', d)}, (err) => {console.log('-----FormGroup error----', err)})
   }
 
   return (

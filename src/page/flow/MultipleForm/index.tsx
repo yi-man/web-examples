@@ -35,7 +35,16 @@ const DnDFlow = () => {
 
   const [selectedTab, setSelectedTab] = useState<string>(selectedSchema)
 
-  const onInit = (rfi: ReactFlowInstance) => setReactFlowInstance(rfi);
+  const onInit = (rfi: ReactFlowInstance) => {
+    setReactFlowInstance(rfi);
+
+    const stage = document.getElementById('stage')
+    if(stage) {
+      stage.oncontextmenu=function(e){
+        e.preventDefault();
+      }
+    }
+  }
   
   const onConnect = useCallback((params: Connection | Edge) => {
     if(canConnect(params, nodes)) {
@@ -96,7 +105,7 @@ const DnDFlow = () => {
     <div className={styles.dndflow}>
       <ReactFlowProvider>
         <Sidebar />
-        <div className={styles.wrapper}>
+        <div className={styles.wrapper} id='stage'>
           <ReactFlow
             nodes={nodes}
             edges={edges}

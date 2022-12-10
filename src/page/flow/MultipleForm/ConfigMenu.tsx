@@ -10,8 +10,6 @@ interface ConfigMenuProps {
 }
 export const ConfigMenu: React.FC<ConfigMenuProps> = ({schema, activeKey,onTabClick}) => {
 
-
-
   return (
    <div
     style={{ width:372, marginLeft:24,  height: '100%'}}

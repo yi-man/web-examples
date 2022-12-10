@@ -59,5 +59,4 @@ export const useSchema = () => {
     deleteSchema,
     selectedSchema: trainers[0]
   }
-
 }

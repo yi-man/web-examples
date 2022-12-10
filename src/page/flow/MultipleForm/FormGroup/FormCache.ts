@@ -40,10 +40,13 @@ export class FormCache{
       const form = this.cache[k]
 
       return form.submit().then(d => [k, d] as [string, object])
-    })).then(dataArr => dataArr.reduce((acc, data)=> {
-      acc[data[0]] = data[1]
-      return acc
-    }, {} as Record<string, object>))
+    })).then(
+      dataArr => {
+        return dataArr.reduce((acc, data)=> {
+          acc[data[0]] = data[1]
+          return acc
+        }, {} as Record<string, object>)
+      }, (error: Error)=> Promise.reject(error))
   }
 }
 
@@ -76,7 +79,7 @@ export class FormGroupCache{
     })).then(dataArr => dataArr.reduce((acc, data)=> {
       acc[data[0]] = data[1]
       return acc
-    }, {} as Record<string, object>))
+    }, {} as Record<string, object>), (error: Error)=> Promise.reject(error))
   }
 
 }
