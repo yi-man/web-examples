@@ -1,12 +1,13 @@
 import {
   Node,
 } from 'reactflow';
-import {schema} from './schema'
+import {schema} from './data'
 import { ISchema } from '@formily/react'
 
 type DataType = { label: string,  schema: ISchema[]}
+type NodeType = 'input' | 'output' | 'default'
 export type DataNode = Omit<Node<DataType>, 'type'> & {
-  type: 'input' | 'output' | 'default'
+  type: NodeType
 }
 
 export const nodeModels = [
@@ -23,7 +24,7 @@ export const nodeModels = [
     type: 'default',
     data: {
       label: schema['data-cut'].title,
-      schema: [schema['data-cut'], schema['data-cut']]
+      schema: [schema['data-cut']]
     },
   },
   {

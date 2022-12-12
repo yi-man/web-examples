@@ -1,59 +1,35 @@
-import { ISchema, SchemaProperties } from '@formily/react';
 import { useCallback, useMemo, useState } from 'react';
 import { DataNode, initialNodes } from './nodeModels';
-import {decoratorSchema} from './decoratorSchema'
+import {Schema} from './schema'
 
-export type SchemaState = {[k: string]: {[k: string]: ISchema}}
-// 假设有两个trainer
-const trainers = ['trainer1', 'trainer2'] as const 
-
-const add = (schema: SchemaState, n: DataNode) => {
-  trainers.forEach((t, index) => {
-    if(n.data.schema[index]) {
-      schema[t][n.id] =  decoratorSchema(n.data.schema[index])
-    }
-  })
-}
-
-const del = (schema: SchemaState, deletedNodes: DataNode[]) => {
-  deletedNodes.forEach((n) => {
-    trainers.forEach((t, index) => {
-        delete schema[t][n.id]  
-    })
-  })
-}
-
+export type SchemaState = Schema['schema']
 export const useSchema = () => {
+  const schemaInstance = useMemo(() => new Schema(), [])
 
   const initialSchema = useMemo(() => {
-    const schema: SchemaState = {}
-    trainers.forEach(t => {
-      schema[t] = {}
-    })
+    schemaInstance.addNodes(initialNodes)
 
-    initialNodes.forEach(n => {
-      add(schema, n)
-    })
-
-    return schema
+    return schemaInstance.schema
   }, [initialNodes])
 
-  const [schema, setSchema] = useState<SchemaState>(initialSchema)
+  const [schema, setSchema] = useState<Schema['schema']>(initialSchema)
 
   const addSchema = useCallback((n: DataNode) => {
-    add(schema, n)
-    setSchema(schema)
+    schemaInstance.addNodes([n])
+
+    setSchema(schemaInstance.schema)
   }, [schema])
 
   const deleteSchema = useCallback((deletedNodes: DataNode[]) => {
-    del(schema, deletedNodes)
-    setSchema(schema)
+    schemaInstance.deleteNodes(deletedNodes)
+
+    setSchema(schemaInstance.schema)
   }, [schema])
 
   return {
     schema,
     addSchema,
     deleteSchema,
-    selectedSchema: trainers[0]
+    defaultTrainer: Object.keys(schema)[0]
   }
 }

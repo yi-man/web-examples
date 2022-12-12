@@ -20,9 +20,9 @@ const DnDFlow = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance>();
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const {schema, selectedSchema, addSchema, deleteSchema} = useSchema()
+  const {schema, addSchema, deleteSchema, defaultTrainer} = useSchema()
 
-  const [selectedTab, setSelectedTab] = useState<string>(selectedSchema)
+  const [selectedTab, setSelectedTab] = useState<string>(defaultTrainer)
 
   const onInit = useCallback((rfi: ReactFlowInstance) => {
     setReactFlowInstance(rfi);
@@ -79,6 +79,7 @@ const DnDFlow = () => {
   }, [])
 
   const onNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
+    console.log(5555555555555555, `${selectedTab}-${node.id}`)
     const element = document.getElementById(`${selectedTab}-${node.id}`)
     element?.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
   }, [selectedTab])

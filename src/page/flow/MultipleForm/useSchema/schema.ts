@@ -1,201 +1,118 @@
-import { ISchema } from '@formily/react'
+import { ISchema, SchemaProperties } from '@formily/react'
+import {DataNode} from './nodeModels'
 
-export const schema: {[k: string]: ISchema} = {
-  dataset: {
-    type: 'object',
-    title: '选择数据集',
-    properties: {
-      ds: {
-        type: 'string',
-        title: '类型',
-        enum: [
-          { label: '类型1', value: 'type_1' },
-          { label: '类型2', value: 'type_2' },
-        ],
-        // 'x-decorator': 'FormItem',
-        // 'x-component': 'Select',
-      },
-    },
-  },
-  xgb:  {
-    type: 'object',
-    title: '纵向xgb',
-    properties: {
-      interaction_params: {
-        type: 'object',
-        title: '交互参数',
-        'x-decorator': 'Section',
-        properties: {
-          save_frequency: {
-            type: 'number',
-            title: 'save_frequency',
-            default: -1,
-            exclusiveMinimum: -1,
-            required: true,
-            // 'x-decorator': 'FormItem',
-            // 'x-component': 'NumberPicker',
-          },
-          echo_training_metrics: {
-            type: 'boolean',
-            title: 'echo_training_metrics',
-            default: true,
-            required: true,
-            // 'x-decorator': 'FormItem',
-            // 'x-component': 'Checkbox',
-          }
-        }
-      },
-      train_params: {
-        type: 'object',
-        title: '训练参数',
-        // 'x-decorator': 'Section',
-        // 'x-decorator-props': {
-        //   labelCol: 6
-        // },
-        properties: {
-          lossfunc: {
-            type: 'string',
-            title: '函数',
-            // 'x-decorator': 'FormItem',
-            // 'x-component': 'Select',
-            // 'x-component-props': {
-            //   style: {
-            //     // width: 120,
-            //   },
-            // },
-            enum: [
-              { label: 'BCEWithLogitsLoss', value: 'BCEWithLogitsLoss' },
-            ]
-          },
-          num_trees: {
-            type: 'string',
-            title: 'num_trees',
-            default: 30,
-            exclusiveMinimum: 1,
-            // 'x-decorator': 'FormItem',
-            // 'x-component': 'NumberPicker',
-            // 'x-component-props': {
-            //   style: {
-            //     width: 240,
-            //   },
-            // },
-          },
-          downsampling: {
-            type: 'object',
-            title: '下载样本',
-            // 'x-decorator': 'Section',
-           
-            properties: {
-              column: {
-                type: 'object',
-                title: '列',
-                // 'x-decorator': 'Section',
-                // 'x-decorator-props': {
-                //   labelCol: 8
-                // },
-                properties:{
-                  rate: {
-                    type: 'number',
-                    title: 'rate',
-                    default: 1.0,
-                    exclusiveMinimum: 0,
-                    exclusiveMaximum: 1,
-                    // 'x-decorator': 'FormItem',
-                    // 'x-component': 'NumberPicker',
-                    'x-component-props': {
-                      style: {
-                        width: 240,
-                      },
-                      step: 0.1
-                    },
-                  },
-                }
-              },
-              row: {
-                type: 'object',
-                title: '行',
-                // 'x-decorator': 'Section',
-                // 'x-decorator-props': {
-                //   labelCol: 8
-                // },
-                properties:{
-                  run_goss: {
-                    type: 'boolean',
-                    title: 'run_goss',
-                    default: true,
-                    // 'x-decorator': 'FormItem',
-                    // 'x-component': 'Checkbox',
-                  },
-  
-                  top_rate: {
-                    type: 'string',
-                    title: 'top_rate',
-                    default: 0.3,
-                    exclusiveMinimum: 0,
-                    exclusiveMaximum: 1,
-                    'x-reactions': `{{(field) => {
-                      field.selfErrors =
-                        field.query('train_params.downsampling.row.other_rate').value() + field.value > 1  ? 'top_rate 和 other_rate的和小于1' : ''
-                    }}}`,
-                    // 'x-decorator': 'FormItem',
-                    // 'x-component': 'NumberPicker',
-                    'x-component-props': {
-                      style: {
-                        width: 240,
-                      },
-                      step: 0.1
-                    },
-                  },
-  
-                  other_rate: {
-                    type: 'number',
-                    title: 'other_rate',
-                    default: 0.4,
-                    exclusiveMinimum: 0,
-                    exclusiveMaximum: 1,
-                    // 'x-decorator': 'FormItem',
-                    // 'x-component': 'NumberPicker',
-                    'x-component-props': {
-                      style: {
-                        width: 240,
-                      },
-                      step: 0.1
-                    },
-                    'x-reactions': {
-                      dependencies: ['train_params.downsampling.row.top_rate'],
-                      fulfill: {
-                        state: {
-                          selfErrors: "{{$deps[0] + $self.value <= 1 ?  '' : 'top_rate 和 other_rate的和小于1'}}",
-                        },
-                      },
-                    },
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  'data-cut': {
-    type: 'object',
-    title: '数据切割',
-    properties: {
-      username: {
-        type: 'string',
-        title: '用户名',
-        required: true,
-        // 'x-decorator': 'FormItem',
-        // 'x-component': 'Input',
-      },
-      password: {
-        type: 'password',
-        title: '密码',
-        required: true,
-        // 'x-decorator': 'FormItem',
-        // 'x-component': 'Password',
-      },
-    },
+type AnySchemaProperties = SchemaProperties<any, any, any, any, any, any, any, any>
+
+type UiType = 'Input' | 'Password' | 'Select' | 'Checkbox' | 'NumberPicker'
+type UiSchema = {
+  [k in UiType]: {
+    'x-decorator': 'FormItem',
+    'x-component': UiType
   }
 }
+// x-component-props 属性怎么办， 如 NumberPicker 的step
+// x-reactions 报错信息的国际化问题
+const uiSchema: UiSchema = {
+  Input: {
+    'x-decorator': 'FormItem',
+    'x-component': 'Input'
+  },
+  Select: {
+    'x-decorator': 'FormItem',
+    'x-component': 'Select'
+  },
+  Password: {
+    'x-decorator': 'FormItem',
+    'x-component': 'Password'
+  },
+  Checkbox: {
+    'x-decorator': 'FormItem',
+    'x-component': 'Checkbox'
+  },
+  NumberPicker: {
+    'x-decorator': 'FormItem',
+    'x-component': 'NumberPicker'
+  }
+}
+
+export type SchemaState = {[trainer: string]: {[nodeId: string]: ISchema}}
+
+export class Schema{
+  schema: SchemaState
+
+  constructor(schema?: SchemaState) {
+    this.schema = schema || {}
+  }
+
+  decoratorSchema(localSchema: ISchema) {
+    const schema = localSchema
+    if(schema.type === 'object') {
+      if(!schema['x-decorator']){
+        schema['x-decorator'] = 'Section'
+      }
+  
+      if(schema.properties) {
+        const properties = schema.properties as AnySchemaProperties
+        Object.keys(properties).forEach(property => {
+          this.decoratorSchema(properties[property])
+        })
+      }
+    } else {
+      let uiType: UiType = 'Input'
+      if(schema.type === 'string' && schema.enum) {
+        uiType = 'Select'
+      } else if (schema.type === 'password') { 
+        uiType = 'Password' 
+      } else if(schema.type === 'number') {
+        uiType = 'NumberPicker' 
+      } else if (schema.type === 'boolean') {
+        uiType = 'Checkbox'
+      }
+  
+      const defaultUiSchema = uiSchema[uiType]
+  
+      if(!schema['x-decorator']){
+        schema['x-decorator'] = defaultUiSchema['x-decorator']
+      }
+      if(!schema['x-component']){
+        schema['x-component'] = defaultUiSchema['x-component']
+      }
+    } 
+  
+    return schema
+  }
+
+  addNodes = (nodes: DataNode[]) => {
+    const {schema} = this
+    nodes.forEach((n)=> {
+      n.data.schema.forEach((s, index) => {
+        const k = `trainer${index+1}`
+    
+        if(!schema[k]){
+          schema[k] = {}
+        }
+    
+        schema[k][n.id] = this.decoratorSchema(s)
+      })
+    })
+    
+    return schema
+  }
+
+  deleteNodes = (deletedNodes: DataNode[]) => {
+    const {schema} = this;
+
+    deletedNodes.forEach((n) => {
+      n.data.schema.forEach((s, index) => {
+        const k = `trainer${index+1}`
+        if(schema[k]){
+          delete schema[k][n.id]  
+        }
+      })
+    })
+  
+    return schema
+  }
+
+}
+
