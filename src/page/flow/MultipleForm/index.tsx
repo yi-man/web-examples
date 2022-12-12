@@ -10,7 +10,7 @@ import { ConfigMenu } from './ConfigMenu';
 import './rewrite.css';
 import Sidebar from './Sidebar';
 import { DataNode, initialNodes, nodeModels } from './useSchema/nodeModels';
-import { canConnect, defaultEdgeOptions, getId, nodeOrigin, onDragOver } from './utils';
+import { canConnect, IdManager, flowDefaultConfig } from './utils';
 
 import styles from './dnd.module.css';
 import { useSchema } from './useSchema';
@@ -57,7 +57,7 @@ const DnDFlow = () => {
       const nodeModel = nodeModels.find(node => node.id === type)
 
       const newNode: DataNode = {
-        id: getId(nodeModel?.id),
+        id: IdManager.getComponentId(nodeModel?.id),
         type,
         position,
         data: { label: `${type} node`, schema: [] },
@@ -79,8 +79,8 @@ const DnDFlow = () => {
   }, [])
 
   const onNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
-    console.log(5555555555555555, `${selectedTab}-${node.id}`)
-    const element = document.getElementById(`${selectedTab}-${node.id}`)
+    const element = document.getElementById(IdManager.geComponentDataId(selectedTab, node.id))
+    
     element?.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
   }, [selectedTab])
 
@@ -90,6 +90,7 @@ const DnDFlow = () => {
         <Sidebar />
         <div className={styles.wrapper} id='stage'>
           <ReactFlow
+            {...flowDefaultConfig}
             nodes={nodes}
             edges={edges}
             onEdgesChange={onEdgesChange}
@@ -97,9 +98,6 @@ const DnDFlow = () => {
             onConnect={onConnect}
             onInit={onInit}
             onDrop={onDrop}
-            onDragOver={onDragOver}
-            nodeOrigin={nodeOrigin}
-            defaultEdgeOptions={defaultEdgeOptions}
             onNodesDelete={onNodesDelete}
             onNodeClick={onNodeClick}
           >

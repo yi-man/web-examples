@@ -7,11 +7,6 @@ import  {
 } from 'reactflow';
 import  {  DragEvent } from 'react';
 
-
-let id = 0;
-export const getId = (prefix?: string) => `${prefix ? prefix : 'dndnode'}_${id++}`;
-
-
 export const canConnect = (params: Connection | Edge, nodes: Node[]) => {
   // const source = params.source as string
   // const target = params.target as string
@@ -23,14 +18,14 @@ export const canConnect = (params: Connection | Edge, nodes: Node[]) => {
   return true
 }
 
-export const onDragOver = (event: DragEvent) => {
+ const onDragOver = (event: DragEvent) => {
   event.preventDefault();
   event.dataTransfer.dropEffect = 'move';
 };
 
-export const nodeOrigin: NodeOrigin = [0.5, 0.5];
+ const nodeOrigin: NodeOrigin = [0.5, 0.5];
 
-export const defaultEdgeOptions = {
+ const defaultEdgeOptions = {
   markerEnd: {
     type: MarkerType.ArrowClosed,
   },
@@ -39,3 +34,16 @@ export const defaultEdgeOptions = {
   },
 };
 
+export const flowDefaultConfig = {
+  defaultEdgeOptions,
+  nodeOrigin,
+  onDragOver
+}
+
+export class IdManager {
+  static componentId = 0
+
+  static getComponentId = (prefix?: string) => `${prefix ? prefix : 'dndnode'}_${IdManager.componentId++}`;
+
+  static geComponentDataId = (tabId: string, nodeId: string) => `${tabId}-${nodeId}`
+}

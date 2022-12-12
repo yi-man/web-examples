@@ -35,8 +35,9 @@ const uiSchema: UiSchema = {
   }
 }
 
-export type SchemaState = {[trainer: string]: {[nodeId: string]: ISchema}}
+type SchemaState = {[trainer: string]: {[nodeId: string]: ISchema}}
 
+const getTrainerId = (index: number) => `trainer${index+1}`
 export class Schema{
   schema: SchemaState
 
@@ -86,7 +87,7 @@ export class Schema{
     const {schema} = this
     nodes.forEach((n)=> {
       n.data.schema.forEach((s, index) => {
-        const k = `trainer${index+1}`
+        const k = getTrainerId(index)
     
         if(!schema[k]){
           schema[k] = {}
@@ -104,7 +105,7 @@ export class Schema{
 
     deletedNodes.forEach((n) => {
       n.data.schema.forEach((s, index) => {
-        const k = `trainer${index+1}`
+        const k = getTrainerId(index)
         if(schema[k]){
           delete schema[k][n.id]  
         }

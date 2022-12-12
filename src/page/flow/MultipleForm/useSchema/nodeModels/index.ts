@@ -1,7 +1,7 @@
 import {
   Node,
 } from 'reactflow';
-import {schema} from './data'
+import {schema} from './schema'
 import { ISchema } from '@formily/react'
 
 type DataType = { label: string,  schema: ISchema[]}
