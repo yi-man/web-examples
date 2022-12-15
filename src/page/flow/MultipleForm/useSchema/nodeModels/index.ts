@@ -20,6 +20,14 @@ export const nodeModels = [
     },
   },
   {
+    id: 'xgboost',
+    type: 'default',
+    data: {
+      label: schema['xgboost'].title,
+      schema: [schema['xgboost_label'], schema['xgboost']]
+    },
+  },
+  {
     id: 'data-cut',
     type: 'default',
     data: {

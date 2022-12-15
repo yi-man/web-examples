@@ -3,11 +3,13 @@ import {DataNode} from './nodeModels'
 
 type AnySchemaProperties = SchemaProperties<any, any, any, any, any, any, any, any>
 
-type UiType = 'Input' | 'Password' | 'Select' | 'Checkbox' | 'NumberPicker'
+type UiType = 'Input' | 'Password' | 'Select' | 'Checkbox' | 'NumberPicker' | 'IntegerPicker'
+| 'FloatPicker'
 type UiSchema = {
   [k in UiType]: {
     'x-decorator': 'FormItem',
-    'x-component': UiType
+    'x-component': UiType,
+    'x-component-props'?: object
   }
 }
 // x-component-props 属性怎么办， 如 NumberPicker 的step
@@ -32,6 +34,25 @@ const uiSchema: UiSchema = {
   NumberPicker: {
     'x-decorator': 'FormItem',
     'x-component': 'NumberPicker'
+  },
+  IntegerPicker: {
+    'x-decorator': 'FormItem',
+    'x-component': 'NumberPicker',
+    'x-component-props': {
+      step: 1,
+      style: {
+            width: 240,
+          },
+    }
+  },
+  FloatPicker: {
+    'x-decorator': 'FormItem',
+    'x-component': 'NumberPicker',
+    'x-component-props': {
+      step: 0.1,
+      style: {
+        width: 240,
+      },    }
   }
 }
 
@@ -68,6 +89,10 @@ export class Schema{
         uiType = 'NumberPicker' 
       } else if (schema.type === 'boolean') {
         uiType = 'Checkbox'
+      } else if (schema.type === 'integer') {
+        uiType = 'IntegerPicker'
+      } else if(schema.type === 'float') {
+        uiType = 'FloatPicker'
       }
   
       const defaultUiSchema = uiSchema[uiType]
@@ -77,6 +102,9 @@ export class Schema{
       }
       if(!schema['x-component']){
         schema['x-component'] = defaultUiSchema['x-component']
+      } 
+      if(!schema['x-component-props']){
+        schema['x-component-props'] = defaultUiSchema['x-component-props']
       }
     } 
   

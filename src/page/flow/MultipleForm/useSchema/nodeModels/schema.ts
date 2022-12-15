@@ -197,5 +197,345 @@ export const schema: {[k: string]: ISchema} = {
         // 'x-component': 'Password',
       },
     },
+  },
+  xgboost_label: {
+    "type": "object",
+    "title": "xgboost",
+    "properties": {
+      "num_trees": {
+        "type": "integer",
+        "title": "num_trees",
+        "exclusiveMinimum": 1
+      },
+      "learning_rate": {
+        "type": "float",
+        "title": "learning_rate",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "gamma": {
+        "type": "float",
+        "title": "learning_rate",
+        "exclusiveMinimum": 0
+      },
+      "lambda_": {
+        "type": "float",
+        "title": "lambda_",
+        "exclusiveMinimum": 0
+      },
+      "max_depth": {
+        "type": "integer",
+        "title": "max_depth",
+        "exclusiveMinimum": 1
+      },
+      "num_bins": {
+        "type": "integer",
+        "title": "max_depth",
+        "exclusiveMinimum": 2
+      },
+      "min_split_gain": {
+        "type": "float",
+        "title": "min_split_gain",
+        "exclusiveMinimum": 0
+      },
+      "min_sample_split": {
+        "type": "integer",
+        "title": "min_split_gain",
+        "exclusiveMinimum": 1
+      },
+      "feature_importance_type": {
+        "type": "string",
+        "title": "feature_importance_type",
+        "enum": [
+          {
+            "label": "gain",
+            "value": "gain"
+          },
+          {
+            "label": "split",
+            "value": "split"
+          }
+        ]
+      },
+      "max_num_cores": {
+        "type": "integer",
+        "title": "max_num_cores",
+        "exclusiveMinimum": 1
+      },
+      "batch_size_val": {
+        "type": "integer",
+        "title": "max_num_cores",
+        "exclusiveMinimum": 1
+      },
+      "down_sampling": {
+        "type": "object",
+        "title": "Down sampling",
+        "properties": {
+          "column_rate": {
+            "type": "integer",
+            "title": "max_num_cores",
+            "exclusiveMinimum": 0,
+            "exclusiveMaximum": 1
+          },
+          "row_run_goss": {
+            "type": "boolean",
+            "title": "row_run_goss"
+          },
+          "row_top_rate": {
+            "type": "float",
+            "title": "row_top_rate",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "row_other_rate": {
+            "type": "float",
+            "title": "row_other_rate",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      },
+      "categorical_feature": {
+        "type": "object",
+        "title": "Categorical Feature",
+        "properties": {
+          "category_smooth": {
+            "type": "float",
+            "title": "category_smooth",
+            "minimum": 0,
+            exclusiveMaximum: 1
+          },
+          "category_col_index": {
+            "type": "string",
+            "title": "category_col_index"
+          },
+          "category_col_names": {
+            "type": "string",
+            "title": "category_col_index"
+          },
+          "category_max_num_value": {
+            "type": "integer",
+            "title": "category_max_num_value",
+            "exclusiveMinimum": 0
+          },
+          "catogory_col_index_type": {
+            "type": "string",
+            "title": "catogory_col_index_type",
+            "enum": [
+              {
+                "label": "inclusive",
+                "value": "inclusive"
+              },
+              {
+                "label": "exclusive",
+                "value": "exclusive"
+              }
+            ]
+          },
+          "category_col_names_type": {
+            "type": "string",
+            "title": "category_col_names_type",
+            "enum": [
+              {
+                "label": "inclusive",
+                "value": "inclusive"
+              },
+              {
+                "label": "exclusive",
+                "value": "exclusive"
+              }
+            ]
+          },
+          "category_max_num_value_type": {
+            "type": "string",
+            "title": "category_max_num_value_type",
+            "enum": [
+              {
+                "label": "inclusive",
+                "value": "inclusive"
+              },
+              {
+                "label": "exclusive",
+                "value": "exclusive"
+              }
+            ]
+          }
+        }
+      },
+      "metric": {
+        "type": "object",
+        "title": "Metric",
+        "properties": {
+          "decision_table": {
+            "type": "boolean",
+            "title": "decision_table"
+          },
+          "decision_table_method": {
+            "type": "string",
+            "title": "decision_table_method",
+            "enum": [
+              {
+                "label": "equal_frequency",
+                "value": "equal_frequency"
+              },
+              {
+                "label": "equal_width",
+                "value": "equal_width"
+              }
+            ]
+          },
+          "decision_table_bins": {
+            "type": "integer",
+            "title": "decision_table_bins",
+            "exclusiveMinimum": 2
+          }
+        }
+      },
+      "early_stopping": {
+        "type": "object",
+        "title": "Early Stopping",
+        "properties": {
+          "early_stopping_key": {
+            "type": "string",
+            "title": "early_stopping_key",
+            "enum": [
+              {
+                "label": "acc",
+                "value": "precision"
+              },
+              {
+                "label": "precision",
+                "value": "equal_width"
+              },
+              {
+                "label": "recall",
+                "value": "equal_width"
+              },
+              {
+                "label": "f1_score",
+                "value": "equal_width"
+              },
+              {
+                "label": "auc",
+                "value": "equal_width"
+              },
+              {
+                "label": "ks",
+                "value": "equal_width"
+              }
+            ]
+          },
+          "early_stopping_patience": {
+            "type": "integer",
+            "title": "early_stopping_patience",
+            "exclusiveMinimum": 1
+          },
+          "early_stopping_delta": {
+            "type": "float",
+            "title": "early_stopping_delta",
+            "minimum": 0
+          }
+        }
+      },
+      "encryption_method": {
+        "type": "string",
+        "title": "Encryption",
+        "enum": [
+          {
+            "label": "paillier",
+            "value": "paillier"
+          }
+        ]
+      }
+    }
+  },
+  xgboost: {
+    "type": "object",
+    "title": "xgboost",
+    "properties": {
+      "max_num_cores": {
+        "type": "integer",
+        "title": "max_num_cores",
+        "exclusiveMinimum": 1
+      },
+      "batch_size_val": {
+        "type": "integer",
+        "title": "max_num_cores",
+        "exclusiveMinimum": 1
+      },
+      "down_sampling": {
+        "type": "object",
+        "title": "Down sampling",
+        "properties": {
+          "column_rate": {
+            "type": "integer",
+            "title": "max_num_cores",
+            "exclusiveMinimum": 0,
+            "exclusiveMaximum": 1
+          }
+        }
+      },
+      "categorical_feature": {
+        "type": "object",
+        "title": "Categorical Feature",
+        "properties": {
+          "category_col_index": {
+            "type": "string",
+            "title": "category_col_index"
+          },
+          "category_col_names": {
+            "type": "string",
+            "title": "category_col_index"
+          },
+          "category_max_num_value": {
+            "type": "integer",
+            "title": "category_max_num_value",
+            "exclusiveMinimum": 0
+          },
+          "catogory_col_index_type": {
+            "type": "string",
+            "title": "catogory_col_index_type",
+            "enum": [
+              {
+                "label": "inclusive",
+                "value": "inclusive"
+              },
+              {
+                "label": "exclusive",
+                "value": "exclusive"
+              }
+            ]
+          },
+          "category_col_names_type": {
+            "type": "string",
+            "title": "category_col_names_type",
+            "enum": [
+              {
+                "label": "inclusive",
+                "value": "inclusive"
+              },
+              {
+                "label": "exclusive",
+                "value": "exclusive"
+              }
+            ]
+          },
+          "category_max_num_value_type": {
+            "type": "string",
+            "title": "category_max_num_value_type",
+            "enum": [
+              {
+                "label": "inclusive",
+                "value": "inclusive"
+              },
+              {
+                "label": "exclusive",
+                "value": "exclusive"
+              }
+            ]
+          }
+        }
+      }
+    }
   }
 }

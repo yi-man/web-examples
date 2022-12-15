@@ -23,7 +23,7 @@ export const canConnect = (params: Connection | Edge, nodes: Node[]) => {
   event.dataTransfer.dropEffect = 'move';
 };
 
- const nodeOrigin: NodeOrigin = [0.5, 0.5];
+ const nodeOrigin: NodeOrigin = [1, 1];
 
  const defaultEdgeOptions = {
   markerEnd: {
